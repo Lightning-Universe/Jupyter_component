@@ -11,7 +11,7 @@ lightning init component lit_jupyter
 First, install lit_jupyter (warning: this app has not been officially approved on the lightning gallery):
 
 ```bash
-lightning install component https://github.com/theUser/lit_jupyter
+lightning install component https://github.com/PyTorchLightning/lit-jupyter
 ```
 
 Once the app is installed, use it in an app:
