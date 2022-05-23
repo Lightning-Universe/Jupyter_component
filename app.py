@@ -1,8 +1,5 @@
-import imp
 from lit_jupyter import LitJupyter
-
 import lightning as L
-from time import sleep
 
 
 class LitApp(L.LightningFlow):
