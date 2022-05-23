@@ -1,16 +1,20 @@
-from lit_jupyter import TemplateComponent
+import imp
+from lit_jupyter import LitJupyter
 
 import lightning as L
+from time import sleep
 
 
 class LitApp(L.LightningFlow):
     def __init__(self) -> None:
         super().__init__()
-        self.lit_jupyter = TemplateComponent()
+        self.lit_jupyter = LitJupyter()
 
     def run(self):
-        print("this is a simple Lightning app to verify your component is working as expected")
         self.lit_jupyter.run()
+    
+    def configure_layout(self):
+        return {'name': 'notebook', 'content': self.lit_jupyter}
 
 
 app = L.LightningApp(LitApp())

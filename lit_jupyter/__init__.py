@@ -1,3 +1,3 @@
-from lit_jupyter.component import TemplateComponent
+from lit_jupyter.component import LitJupyter
 
-__all__ = ["TemplateComponent"]
+__all__ = ["LitJupyter"]
