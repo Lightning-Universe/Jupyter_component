@@ -24,6 +24,6 @@ def test_jupyter_lab(caplog):
     logger.propagate = True
 
     app = L.LightningApp(JupyterLabManager())
-    SingleProcessRuntime(app, start_server=False).dispatch()
+    # SingleProcessRuntime(app, start_server=False).dispatch()
     #lit_jupyter_lab = LitJupyter()
     #print(caplog.text)
