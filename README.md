@@ -1,35 +1,69 @@
-# lit_jupyter component
+<!---:lai-name: Slack Messenger--->
 
-This ⚡ [Lightning component](lightning.ai) ⚡ was generated automatically with:
+<div align="center">
+<img src="https://jupyter.org/assets/homepage/main-logo.svg" width="200px">
 
-```bash
-lightning init component lit_jupyter
-```
+A Lightning component to Launch Jupyter Lab
+______________________________________________________________________
 
-## To run lit_jupyter
+![Tests](https://github.com/PyTorchLightning/LAI-Jupyter-Component/actions/workflows/ci-testing.yml/badge.svg)
+</div>
 
-```bash
-lightning install component lightning/lit-jupyter
-```
+# Jupyter Lab
+JupyterLab is the latest web-based interactive development environment for notebooks, code, and data. Its flexible interface allows users to configure and arrange workflows in data science, scientific computing, computational journalism, and machine learning. This component allows you to create `LightningWork` with Jupyter Lab.
 
-Once the app is installed, use it in an app:
+# Usage
+To use this component add modify the following variables below. Please consider checking out our documentation to understand they types of [Cloud Compute](https://lightning.ai/lightning-docs/core_api/lightning_work/compute.html) instances supported.
 
 ```python
 from lit_jupyter import LitJupyter
 import lightning as L
+import os
 
-
-class LitApp(L.LightningFlow):
+class JupyterLabManager(L.LightningFlow):
     def __init__(self) -> None:
         super().__init__()
-        self.lit_jupyter = LitJupyter()
+        self.user_name = '<YOUR_USER_NAME>'
+        self.jupyter_work = LitJupyter(cloud_compute=L.CloudCompute(os.getenv("COMPUTE", "<COMPUTE_INSTANCE>")))
 
     def run(self):
-        self.lit_jupyter.run()
+        self.jupyter_work.run()
     
     def configure_layout(self):
-        return {'name': 'notebook', 'content': self.lit_jupyter}
+        return {'name': f"{self.user_name}", 'content': self.jupyter_work}
 
-app = L.LightningApp(LitApp())
+app = L.LightningApp(JupyterLabManager())
+```
 
+By default this component launches a `cpu-small` Compute Instance. This can be overridden using the COMPUTE environment variable.
+
+
+```
+lightning run app component.py --cloud
+lightning run app component.py --cloud --env COMPUTE=gpu
+```
+
+
+# Installation
+Use these instructions to install:
+
+<!---:lai-install:--->
+```
+lightning install component lightning/LAI-Jupyter-Component
+```
+
+Or to build locally
+```bash
+git clone https://github.com/PyTorchLightning/LAI-Jupyter-Component
+cd LAI-Jupyter-Component
+pip install -r requirements.txt
+pip install -e .
+```
+
+# Tests
+To run the test locally:
+```
+# From the root of this package
+pip install -r tests/requirements.txt
+pytest
 ```

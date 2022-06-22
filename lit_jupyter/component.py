@@ -1,24 +1,21 @@
 import logging
 import subprocess
-import os
-import subprocess
 import sys
+import os
 import lightning as L
 from typing import Optional
-from lightning.app.storage import Path
+from pathlib import Path
 
 
-class JupyterWork(L.LightningWork):
+class LitJupyter(L.LightningWork):
     def __init__(self, cloud_compute: Optional[L.CloudCompute] = None):
         super().__init__(cloud_compute=cloud_compute, parallel=True)
         self.pid = None
         self.exit_code = None
         self.storage = None
 
-
     def run(self):
         # Delete Existing Configuration
-        self.storage = Path(".")
         jupyter_notebook_config_path = Path.home() / ".jupyter/jupyter_notebook_config.py"
         if os.path.exists(jupyter_notebook_config_path):
             os.remove(jupyter_notebook_config_path)
@@ -53,17 +50,4 @@ class JupyterWork(L.LightningWork):
                 stdout=f,
                 stderr=f,
             )
-
-class JupyterLabManager(L.LightningFlow):
-    def __init__(self) -> None:
-        super().__init__()
-        self.user_name = 'JupyterLab'
-        self.jupyter_work = JupyterWork(cloud_compute=L.CloudCompute(os.getenv("COMPUTE", "cpu")))
-
-    def run(self):
-        self.jupyter_work.run()
-    
-    def configure_layout(self):
-        return {'name': f"{self.user_name}", 'content': self.jupyter_work}
-
-app = L.LightningApp(JupyterLabManager())
+        logging.info(f'Notebook Stated')

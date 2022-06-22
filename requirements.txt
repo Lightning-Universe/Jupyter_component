@@ -1,1 +1,1 @@
-jupyterlab==3.3.3
+jupyterlab==3.4.3
