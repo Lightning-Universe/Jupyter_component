@@ -20,9 +20,9 @@ with open("tests/requirements.txt") as _file:
     test_reqs = [req for req in _file.readlines()]
 
 setup(
-    name="lit_telegram",
-    version="0.0.1",
-    description="Messaging notifications for telegram.",
+    name="lit_jupyterlab",
+    version="0.0.2",
+    description="JupyterLab component for Lightning Applications",
     long_description=long_description,
     long_description_content_type="text/markdown",
     author="Krishna, William, Marc, Thomas",

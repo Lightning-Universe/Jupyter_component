@@ -1,29 +1,10 @@
-import os
-import logging
-import lightning as L
-from lightning.app.runners import SingleProcessRuntime
+from unittest import mock
 from lit_jupyter.component import LitJupyter
 
 
-class JupyterLabManager(L.LightningFlow):
-    def __init__(self) -> None:
-        super().__init__()
-        self.user_name = 'JupyterLab'
-        self.jupyter_work = LitJupyter(cloud_compute=L.CloudCompute(idle_timeout=5))
-
-    def run(self):
-        self.jupyter_work.run()
-    
-    def configure_layout(self):
-        return {'name': f"{self.user_name}", 'content': self.jupyter_work}
-
-
-def test_jupyter_lab(caplog):
-    caplog.set_level(logging.INFO)
-    logger = logging.getLogger('app')
-    logger.propagate = True
-
-    app = L.LightningApp(JupyterLabManager())
-    # SingleProcessRuntime(app, start_server=False).dispatch()
-    #lit_jupyter_lab = LitJupyter()
-    #print(caplog.text)
+@mock.patch("lit_jupyter.component.subprocess.run")
+def test_subprocess(mock_popen):
+    mock_popen().wait.return_value = 0
+    obj1 = LitJupyter()
+    obj1.run()
+    return mock_popen.assert_called()

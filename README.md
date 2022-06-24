@@ -20,7 +20,7 @@ from lit_jupyter import LitJupyter
 import lightning as L
 import os
 
-class JupyterLabManager(L.LightningFlow):
+class RootFlow(L.LightningFlow):
     def __init__(self) -> None:
         super().__init__()
         self.user_name = '<YOUR_USER_NAME>'
@@ -32,7 +32,7 @@ class JupyterLabManager(L.LightningFlow):
     def configure_layout(self):
         return {'name': f"{self.user_name}", 'content': self.jupyter_work}
 
-app = L.LightningApp(JupyterLabManager())
+app = L.LightningApp(RootFlow())
 ```
 
 By default this component launches a `cpu-small` Compute Instance. This can be overridden using the COMPUTE environment variable.
