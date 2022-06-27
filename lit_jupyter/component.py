@@ -7,11 +7,24 @@ from typing import Optional
 from pathlib import Path
 
 
+pkg_install = """
+sudo apt-get update
+sudo apt install r-base
+sudo R -e "install.packages('IRkernel')"
+Rscript -e "IRkernel::installspec()"
+wget https://julialang-s3.julialang.org/bin/linux/x64/1.7/julia-1.7.3-linux-x86_64.tar.gz
+tar -xvzf julia-1.7.3-linux-x86_64.tar.gz; julia-1.7.3/bin/julia -e 'using Pkg; Pkg.add("IJulia")'
+""".split('\n')
+
+
+class CustomBuildConfig(L.BuildConfig):
+    def build_commands(self):
+        return pkg_install
+
 class LitJupyter(L.LightningWork):
     def __init__(self, cloud_compute: Optional[L.CloudCompute] = None):
-        super().__init__(cloud_compute=cloud_compute, parallel=True)
-        self.exit_code = None
-        self.storage = None
+        build_config = CustomBuildConfig()
+        super().__init__(cloud_compute=cloud_compute, cloud_build_config=build_config, parallel=True)
 
     def run(self):
         jupyter_out = open('jupyter_log.txt', 'a')
@@ -33,7 +46,7 @@ class LitJupyter(L.LightningWork):
         # Add iFrame configuration
         with open(jupyter_notebook_config_path, "a") as f:
             f.write(
-                """c.NotebookApp.tornado_settings = {'headers': {'Content-Security-Policy': "frame-ancestors * 'self' "}}"""  # noqa E501
+                """c.NotebookApp.tornado_settings = {'headers': {'Content-Security-Policy': "frame-ancestors * 'self' "}}"""
             )
 
         # Start jupyter without password
