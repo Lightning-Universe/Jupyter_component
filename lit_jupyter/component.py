@@ -14,6 +14,7 @@ sudo R -e "install.packages('IRkernel')"
 Rscript -e "IRkernel::installspec()"
 wget https://julialang-s3.julialang.org/bin/linux/x64/1.7/julia-1.7.3-linux-x86_64.tar.gz
 tar -xvzf julia-1.7.3-linux-x86_64.tar.gz; julia-1.7.3/bin/julia -e 'using Pkg; Pkg.add("IJulia")'
+rm -rf julia-1.7.3-linux-x86_64.tar.gz
 """.split('\n')
 
 
