@@ -1,5 +1,3 @@
-<!---:lai-name: Slack Messenger--->
-
 <div align="center">
 <img src="https://jupyter.org/assets/homepage/main-logo.svg" width="200px">
 
@@ -10,7 +8,7 @@ ______________________________________________________________________
 </div>
 
 # Jupyter Lab
-JupyterLab is the latest web-based interactive development environment for notebooks, code, and data. Its flexible interface allows users to configure and arrange workflows in data science, scientific computing, computational journalism, and machine learning. This component allows you to create `LightningWork` with Jupyter Lab.
+JupyterLab is the latest web-based interactive development environment for notebooks, code, and data. Its flexible interface allows users to configure and arrange workflows in data science, scientific computing, computational journalism, and machine learning. This component allows you to create `LightningWork` with Jupyter Lab. This components support the following jupyter kernels (`Python 3.8`, `R 3,6` and `Julia 1.7`).
 
 # Usage
 To use this component add modify the following variables below. Please consider checking out our documentation to understand they types of [Cloud Compute](https://lightning.ai/lightning-docs/core_api/lightning_work/compute.html) instances supported.
@@ -23,8 +21,7 @@ import os
 class RootFlow(L.LightningFlow):
     def __init__(self) -> None:
         super().__init__()
-        self.user_name = '<YOUR_USER_NAME>'
-        self.jupyter_work = LitJupyter(cloud_compute=L.CloudCompute(os.getenv("COMPUTE", "<COMPUTE_INSTANCE>")))
+        self.jupyter_work = LitJupyter(cloud_compute=L.CloudCompute(os.getenv("COMPUTE", "cpu-small")))
 
     def run(self):
         self.jupyter_work.run()
@@ -47,7 +44,6 @@ lightning run app component.py --cloud --env COMPUTE=gpu
 # Installation
 Use these instructions to install:
 
-<!---:lai-install:--->
 ```
 lightning install component lightning/LAI-Jupyter-Component
 ```
