@@ -14,14 +14,14 @@ JupyterLab is the latest web-based interactive development environment for noteb
 To use this component add modify the following variables below. Please consider checking out our documentation to understand they types of [Cloud Compute](https://lightning.ai/lightning-docs/core_api/lightning_work/compute.html) instances supported.
 
 ```python
-from lit_jupyter import LitJupyter
+from lit_jupyter import JupyterLab
 import lightning as L
 import os
 
 class RootFlow(L.LightningFlow):
     def __init__(self) -> None:
         super().__init__()
-        self.jupyter_work = LitJupyter(cloud_compute=L.CloudCompute(os.getenv("COMPUTE", "cpu-small")))
+        self.jupyter_work = JupyterLab(cloud_compute=L.CloudCompute(os.getenv("COMPUTE", "cpu-small")))
 
     def run(self):
         self.jupyter_work.run()
@@ -32,7 +32,7 @@ class RootFlow(L.LightningFlow):
 app = L.LightningApp(RootFlow())
 ```
 
-By default this component launches a `cpu-small` Compute Instance. This can be overridden using the COMPUTE environment variable.
+By default this component launches a `cpu-small` [Compute Instance](https://lightning.ai/lightning-docs/core_api/lightning_work/compute.html). This can be overridden using the COMPUTE environment variable.
 
 
 ```
