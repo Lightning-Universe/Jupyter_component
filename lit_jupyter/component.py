@@ -45,10 +45,11 @@ class LitJupyter(L.LightningWork):
         proc_config.wait()
   
         # Add iFrame configuration
-        with open(jupyter_notebook_config_path, "a") as f:
-            f.write(
-                """c.NotebookApp.tornado_settings = {'headers': {'Content-Security-Policy': "frame-ancestors * 'self' "}}"""
-            )
+        if os.path.exists(jupyter_notebook_config_path):
+            with open(jupyter_notebook_config_path, "a") as f:
+                f.write(
+                    """c.NotebookApp.tornado_settings = {'headers': {'Content-Security-Policy': "frame-ancestors * 'self' "}}"""
+                )
 
         # Start jupyter without password
         remove_pwd = f"--NotebookApp.token='' --NotebookApp.password=''"
