@@ -1,6 +1,5 @@
 from unittest import mock
 import pytest
-from lit_jupyter.component import JupyterLab
 from lightning_app.testing.testing import application_testing, LightningTestApp
 from lightning_app.utilities.enum import AppStage
 from typing import Tuple
