@@ -1,5 +1,6 @@
 from unittest import mock
 import pytest
+from lit_jupyter.component import JupyterLab
 from lightning_app.testing.testing import application_testing, LightningTestApp
 from lightning_app.utilities.enum import AppStage
 from typing import Tuple
@@ -15,7 +16,6 @@ def test_subprocess(mock_popen):
     lightning_work = JupyterLab()
     lightning_work.run()
     return mock_popen.assert_called()
-
 
 
 def test_e2e_integration():
