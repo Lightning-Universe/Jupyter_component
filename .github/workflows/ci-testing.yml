@@ -51,8 +51,8 @@ jobs:
         pip install --requirement tests/requirements.txt --quiet
         pip install -e .
         pip list
-        ls -ltr
       shell: bash
+
     - name: Tests
       run: |
         coverage run --source lit_jupyter -m py.test lit_jupyter tests -v --junitxml=junit/test-results-${{ runner.os }}-${{ matrix.python-version }}.xml
