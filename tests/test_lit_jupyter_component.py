@@ -1,13 +1,8 @@
 from unittest import mock
-import pytest
 from lit_jupyter.component import JupyterLab
-from lightning_app.testing.testing import application_testing, LightningTestApp
-from lightning_app.utilities.enum import AppStage
-from typing import Tuple
 import os
 from click.testing import CliRunner
 from lightning_app.cli.lightning_cli import run_app
-
 
 
 @mock.patch("lit_jupyter.component.subprocess.Popen")
