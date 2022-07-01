@@ -1,3 +1,3 @@
-from lit_jupyter.component import LitJupyter
+from lit_jupyter.component import JupyterLab
 
-__all__ = ["LitJupyter"]
+__all__ = ["JupyterLab"]
