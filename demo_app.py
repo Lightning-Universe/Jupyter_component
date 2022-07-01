@@ -11,7 +11,7 @@ class JupyterLabManager(L.LightningFlow):
 
     def run(self):
         self.jupyter_work.run()
-        if os.environ['TEST']:
+        if os.environ.get('TEST'):
             self._exit("Application End!")
     
     def configure_layout(self):
