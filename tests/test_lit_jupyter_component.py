@@ -22,8 +22,9 @@ def test_e2e_integration():
         "False",
         "--open-ui",
         "False",
+        "--env",
+        "TEST=ci"
     ]
     result = runner.invoke(run_app, command_line, catch_exceptions=False)
-    print(result.stdout)
     assert result.exit_code == 0
 

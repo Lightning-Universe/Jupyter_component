@@ -1,7 +1,8 @@
-from lit_jupyter import JupyterLab
-import lightning as L
-import os
+#!/usr/bin/env python3
 
+import os
+import lightning as L
+from lit_jupyter import JupyterLab
 
 class JupyterLabManager(L.LightningFlow):
     def __init__(self) -> None:
@@ -10,7 +11,8 @@ class JupyterLabManager(L.LightningFlow):
 
     def run(self):
         self.jupyter_work.run()
-        self._exit("Application End!")
+        if os.environ['TEST']:
+            self._exit("Application End!")
     
     def configure_layout(self):
         return [{'name': "JupyterLab", 'content': self.jupyter_work}]
