@@ -17,7 +17,7 @@ def test_e2e_integration():
     runner = CliRunner()
 
     command_line = [
-        "../demo_app.py",
+        "demo_app.py",
         "--blocking",
         "False",
         "--open-ui",
