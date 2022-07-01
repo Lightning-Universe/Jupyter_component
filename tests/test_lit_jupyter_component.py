@@ -11,19 +11,3 @@ def test_subprocess(mock_popen):
     lightning_work = JupyterLab()
     lightning_work.run()
     return mock_popen.assert_called()
-
-
-def test_e2e_integration():
-    runner = CliRunner()
-
-    command_line = [
-        "/home/runner/work/LAI-Jupyter-Component/LAI-Jupyter-Component/demo_app.py",
-        "--blocking",
-        "False",
-        "--multiprocess",
-        "--open-ui",
-        "False",
-    ]
-    result = runner.invoke(run_app, command_line, catch_exceptions=False)
-    assert result.exit_code == 0
-
