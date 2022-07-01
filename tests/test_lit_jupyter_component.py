@@ -24,5 +24,6 @@ def test_e2e_integration():
         "False",
     ]
     result = runner.invoke(run_app, command_line, catch_exceptions=False)
+    print(result.stdout)
     assert result.exit_code == 0
 
