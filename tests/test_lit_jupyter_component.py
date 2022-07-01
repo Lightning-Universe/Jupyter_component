@@ -17,7 +17,7 @@ def test_e2e_integration():
     runner = CliRunner()
 
     command_line = [
-        os.path.join("../demo_app.py"),
+        os.path.join("lit_jupyter/demo_app.py"),
         "--blocking",
         "False",
         "--multiprocess",
