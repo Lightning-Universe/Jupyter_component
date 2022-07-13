@@ -1,10 +1,10 @@
 import logging
-import subprocess
 import sys
 import os
 import lightning as L
 from typing import Optional
-from pathlib import Path
+import subprocess
+import shlex
 
 
 pkg_install_r = """
@@ -33,42 +33,37 @@ class CustomBuildConfig(L.BuildConfig):
                 build_args += build_dict[i]
         return build_args
 
+
+
 class JupyterLab(L.LightningWork):
-    def __init__(self, cloud_compute: Optional[L.CloudCompute] = None, kernel = str):
-        build_config = CustomBuildConfig(kernel)
-        super().__init__(cloud_compute=cloud_compute, cloud_build_config=build_config, parallel=True)
 
+    def __init__(self, cloud_compute: Optional[L.CloudCompute] = None, kernel:str = None):
+        build_config = L.BuildConfig(requirements=["jupyterlab", "notebook"])
+        super().__init__(cloud_compute=cloud_compute, cloud_build_config=build_config)
+        self.token = None
+
+    # 1 min startup time
     def run(self):
-        jupyter_out = open('jupyter_log.txt', 'a')
-
-        # Delete Existing Configuration
-        jupyter_notebook_config_path = Path.home() / ".jupyter/jupyter_notebook_config.py"
-        if os.path.exists(jupyter_notebook_config_path):
-            os.remove(jupyter_notebook_config_path)
-
         # Generate new configuration
-        proc_config =  subprocess.Popen(
-            f"{sys.executable} -m notebook --generate-config".split(" "),
-            stdout=jupyter_out,
-            stderr=jupyter_out,
-            bufsize=0,
-            close_fds=True)
-        proc_config.wait()
-  
-        # Add iFrame configuration
-        if os.path.exists(jupyter_notebook_config_path):
-            with open(jupyter_notebook_config_path, "a") as f:
-                f.write(
-                    """c.NotebookApp.tornado_settings = {'headers': {'Content-Security-Policy': "frame-ancestors * 'self' "}}"""
-                )
+        os.system(f"{sys.executable} -m notebook --generate-config")
 
-        # Start jupyter without password
-        remove_pwd = f"--NotebookApp.token='' --NotebookApp.password=''"
-        proc_server = subprocess.Popen(
-            f"{sys.executable} -m jupyter lab --ip {self.host} --port {self.port} --no-browser {remove_pwd}".split(" "),
-            stdout=jupyter_out,
-            stderr=jupyter_out,
-            bufsize=0,
-            close_fds=True
-        )
-        proc_server.wait()
+        # Jupyter Lab Configuration
+        iframe_tornado_settings = """{\"headers\":{\"Content-Security-Policy\":\"frame-ancestors * 'self' "}}"""
+        jupyter_config = f"--NotebookApp.token='' --NotebookApp.password='' --NotebookApp.tornado_settings='{iframe_tornado_settings}'"
+
+        # Start Jupyter Lab
+        with open(f"jupyter_lab_{self.port}", "w") as f:
+            proc = subprocess.Popen(
+                shlex.split(f"{sys.executable} -m jupyter lab --ip {self.host} --port {self.port} --no-browser {jupyter_config}"),
+                bufsize=0,
+                close_fds=True,
+                stdout=f,
+                stderr=f,
+            )
+        
+        with open(f"jupyter_lab_{self.port}") as f:
+            while True:
+                for line in f.readlines():
+                    if "lab?token=" in line:
+                        self.token = line.split("lab?token=")[-1]
+                        proc.wait()
