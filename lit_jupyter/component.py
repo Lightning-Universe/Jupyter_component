@@ -22,6 +22,7 @@ rm -rf julia-1.7.3-linux-x86_64.tar.gz
 
 class CustomBuildConfig(L.BuildConfig):
     def __init__(self, kernel = str):
+        self.requirements = ["jupyterlab", "notebook"]
         self.kernel = kernel
 
     def build_commands(self):
@@ -34,12 +35,9 @@ class CustomBuildConfig(L.BuildConfig):
         return build_args
 
 
-
 class JupyterLab(L.LightningWork):
-
-    def __init__(self, cloud_compute: Optional[L.CloudCompute] = None, kernel:str = None):
-        build_config = L.BuildConfig(requirements=["jupyterlab", "notebook"])
-        super().__init__(cloud_compute=cloud_compute, cloud_build_config=build_config)
+    def __init__(self, kernel:str = None, cloud_compute: Optional[L.CloudCompute] = None):
+        super().__init__(cloud_compute=cloud_compute, cloud_build_config=CustomBuildConfig(kernel), parallel=True)
         self.token = None
 
     # 1 min startup time
@@ -61,6 +59,7 @@ class JupyterLab(L.LightningWork):
                 stderr=f,
             )
         
+        # Extract URL
         with open(f"jupyter_lab_{self.port}") as f:
             while True:
                 for line in f.readlines():
