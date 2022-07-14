@@ -11,7 +11,7 @@ ______________________________________________________________________
 JupyterLab is the latest web-based interactive development environment for notebooks, code, and data. Its flexible interface allows users to configure and arrange workflows in data science, scientific computing, computational journalism, and machine learning. This component allows you to create `LightningWork` with Jupyter Lab. This components support the following jupyter kernels (`Python 3.8`, `R 3,6` and `Julia 1.7`).
 
 # Usage
-To use this component add modify the following variables below. Please consider checking out our documentation to understand they types of [Cloud Compute](https://lightning.ai/lightning-docs/core_api/lightning_work/compute.html) instances supported.
+To use this component add modify the following variables below. Please consider checking out our documentation to understand they types of [Cloud Compute](https://lightning.ai/lightning-docs/core_api/lightning_work/compute.html) instances supported. Startup time for this component with all kernels is around `3-4` minutes.
 
 ```python
 from lit_jupyter import JupyterLab
@@ -21,7 +21,7 @@ import os
 class RootFlow(L.LightningFlow):
     def __init__(self) -> None:
         super().__init__()
-        self.jupyter_work = JupyterLab(cloud_compute=L.CloudCompute(os.getenv("COMPUTE", "cpu-small")))
+        self.jupyter_work = JupyterLab(kernel="python|julia|r", cloud_compute=L.CloudCompute(os.getenv("COMPUTE", "cpu-small")))
 
     def run(self):
         self.jupyter_work.run()
@@ -32,7 +32,7 @@ class RootFlow(L.LightningFlow):
 app = L.LightningApp(RootFlow())
 ```
 
-By default this component launches a `cpu-small` [Compute Instance](https://lightning.ai/lightning-docs/core_api/lightning_work/compute.html). This can be overridden using the COMPUTE environment variable.
+By default this component is launched using a `cpu-small` [Compute Instance](https://lightning.ai/lightning-docs/core_api/lightning_work/compute.html). This can be overridden using the COMPUTE environment variable.
 
 
 ```
