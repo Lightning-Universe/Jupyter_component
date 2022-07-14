@@ -11,7 +11,7 @@ ______________________________________________________________________
 JupyterLab is the latest web-based interactive development environment for notebooks, code, and data. Its flexible interface allows users to configure and arrange workflows in data science, scientific computing, computational journalism, and machine learning. This component allows you to create `LightningWork` with Jupyter Lab. This components support the following jupyter kernels (`Python 3.8`, `R 3,6` and `Julia 1.7`).
 
 # Usage
-To use this component add modify the following variables below. Please consider checking out our documentation to understand they types of [Cloud Compute](https://lightning.ai/lightning-docs/core_api/lightning_work/compute.html) instances supported. Startup time for this component with all kernels is around `3-4` minutes.
+To use this component add modify the following variables below. Please consider checking out our documentation to understand they types of [Cloud Compute](https://lightning.ai/lightning-docs/core_api/lightning_work/compute.html) instances supported. Startup time for this component with all kernels is around `5-6` minutes.
 
 ```python
 from lit_jupyter import JupyterLab
