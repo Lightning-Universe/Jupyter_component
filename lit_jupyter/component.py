@@ -5,6 +5,7 @@ import lightning as L
 from typing import Optional
 import subprocess
 import shlex
+import time
 
 
 R_INSTALL = """
@@ -37,8 +38,7 @@ class CustomBuildConfig(L.BuildConfig):
 class JupyterLab(L.LightningWork):
     def __init__(self, kernel:str = None, cloud_compute: Optional[L.CloudCompute] = None):
         super().__init__(cloud_compute=cloud_compute, cloud_build_config=CustomBuildConfig(kernel), parallel=True)
-        self.token = None
-        self.url = None
+        self.jupyter_url = None
 
     # 1 min startup time
     def run(self):
@@ -59,11 +59,12 @@ class JupyterLab(L.LightningWork):
                 stderr=f,
             )
         
+        # Sleep for a couple of seconds until server starts
+        time.sleep(5)
+
         # Extract token
         with open(f"jupyter_lab_{self.port}") as f:
-            while True:
-                for line in f.readlines():
-                    if "lab?token=" in line:
-                        self.token = line.split("lab?token=")[-1]
-                        self.url = f"http://{self.host}:{self.port}/lab?token={self.token}"
-                        proc.wait()
+            lines = f.readlines()
+            for i in lines:
+                if 'lightningwork'in i:
+                    self.jupyter_url = i.split(' ')[-1].strip()
