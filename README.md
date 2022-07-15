@@ -27,7 +27,7 @@ class RootFlow(L.LightningFlow):
         self.jupyter_work.run()
     
     def configure_layout(self):
-        return {'name': f"{self.user_name}", 'content': self.jupyter_work}
+        return {'name': "JupyterLab", 'content': self.jupyter_work}
 
 app = L.LightningApp(RootFlow())
 ```
