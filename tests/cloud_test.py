@@ -1,4 +1,6 @@
 import os
+
+from lightning_app import LightningApp
 import pytest
 import requests
 import lightning as L
@@ -27,6 +29,8 @@ class RootFlow(L.LightningFlow):
 
     def run(self):
         self.jupyter_work.run()
+        print("Running.....")
+
         print(self.jupyter_work.jupyter_url)
         if self.jupyter_work.jupyter_url:
             self.test_jupyter_flow.run(self.jupyter_work.jupyter_url)
@@ -58,3 +62,6 @@ def test_app_example_cloud() -> None:
             return True
         
         wait_for(view_page, click_button)
+
+if __name__ == "__main__":
+    app = LightningApp(RootFlow())

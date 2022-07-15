@@ -39,15 +39,17 @@ class JupyterLab(L.LightningWork):
         super().__init__(cloud_compute=cloud_compute, cloud_build_config=CustomBuildConfig(kernel), parallel=True)
         self.jupyter_url = None
 
-    # 1 min startup time
     def run(self):
+        print("A")
         # Generate new configuration
         os.system(f"{sys.executable} -m notebook --generate-config")
-
+        
+        print("B")
         # Jupyter Lab Configuration
         iframe_tornado_settings = """{\"headers\":{\"Content-Security-Policy\":\"frame-ancestors * 'self' "}}"""
         jupyter_config = f"--NotebookApp.token='' --NotebookApp.password='' --NotebookApp.tornado_settings='{iframe_tornado_settings}'"
 
+        print("C")
         # Start Jupyter Lab
         with open(f"jupyter_lab_{self.port}", "w") as f:
             proc = subprocess.Popen(
@@ -60,10 +62,13 @@ class JupyterLab(L.LightningWork):
         
         # Sleep for a couple of seconds until server starts
         sleep(5)
-
+        print("D")
         # Extract token
         with open(f"jupyter_lab_{self.port}") as f:
             lines = f.readlines()
+            # Rewrite the URL
             for i in lines:
                 if 'lightningwork'in i:
                     self.jupyter_url = i.split(' ')[-1].strip()
+
+        print("E")
