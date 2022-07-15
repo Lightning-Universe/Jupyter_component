@@ -1,11 +1,10 @@
-import logging
 import sys
 import os
 import lightning as L
 from typing import Optional
 import subprocess
 import shlex
-import time
+from time import sleep
 
 
 R_INSTALL = """
@@ -60,7 +59,7 @@ class JupyterLab(L.LightningWork):
             )
         
         # Sleep for a couple of seconds until server starts
-        time.sleep(5)
+        sleep(5)
 
         # Extract token
         with open(f"jupyter_lab_{self.port}") as f:
