@@ -55,7 +55,7 @@ jobs:
 
     - name: Tests
       run: |
-        coverage run --source lit_jupyter -m py.test lit_jupyter tests -v --junitxml=junit/test-results-${{ runner.os }}-${{ matrix.python-version }}.xml
+        coverage run --source lit_jupyter -m pytest lit_jupyter tests -v --junitxml=junit/test-results-${{ runner.os }}-${{ matrix.python-version }}.xml
 
     - name: Statistics
       if: success()
