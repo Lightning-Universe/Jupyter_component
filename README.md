@@ -51,7 +51,8 @@ lightning install component lightning/LAI-Jupyter-Component
 
 Or to build locally
 ```bash
-git clone https://github.com/PyTorchLightning/LAI-Jupyter-Component
+git clone https://github.com/Lightning-AI/LAI-Jupyter-Component
+
 cd LAI-Jupyter-Component
 pip install -r requirements.txt
 pip install -e .
