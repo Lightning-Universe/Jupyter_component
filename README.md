@@ -4,7 +4,7 @@
 A Lightning component to Launch Jupyter Lab
 ______________________________________________________________________
 
-![Tests](https://github.com/PyTorchLightning/LAI-Jupyter-Component/actions/workflows/ci-testing.yml/badge.svg)
+![Tests](https://github.com/Lightning-AI/LAI-Jupyter-Component/actions/workflows/ci-testing.yml/badge.svg)
 </div>
 
 # Jupyter Lab
