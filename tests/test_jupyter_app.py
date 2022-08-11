@@ -2,7 +2,7 @@ import os
 
 import requests
 import lightning as L
-from lightning.app.runners import SingleProcessRuntime
+from lightning.app.runners import MultiProcessRuntime
 from lit_jupyter import JupyterLab
 
 
@@ -20,7 +20,7 @@ class TestJupyterServer(L.LightningFlow):
 class RootFlow(L.LightningFlow):
     def __init__(self):
         super().__init__()
-        self.jupyter_work = JupyterLab(kernel="python", cloud_compute=L.CloudCompute(os.getenv("COMPUTE", "cpu-small")))
+        self.jupyter_work = JupyterLab(kernel="python", cloud_compute=L.CloudCompute(os.getenv("LIGHTNING_JUPYTER_LAB_COMPUTE", "cpu-small")))
         self.test_jupyter_flow = TestJupyterServer()
 
     def run(self):
@@ -38,4 +38,4 @@ class RootFlow(L.LightningFlow):
 
 def test_file_server():
     app = L.LightningApp(RootFlow())
-    SingleProcessRuntime(app).dispatch()
+    MultiProcessRuntime(app).dispatch()

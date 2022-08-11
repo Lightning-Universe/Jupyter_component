@@ -25,7 +25,7 @@ setup(
     description="JupyterLab component for Lightning Applications",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    author="Krishna, William, Marc, Thomas",
+    author="William, Marc, Thomas, Krishna",
     author_email="krishna@grid.ai",
     url="https://github.com/Lightning-AI/LAI-Jupyter-Component",
     packages=find_packages(exclude=["tests", "tests.*"]),

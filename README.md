@@ -21,7 +21,7 @@ import os
 class RootFlow(L.LightningFlow):
     def __init__(self) -> None:
         super().__init__()
-        self.jupyter_work = JupyterLab(kernel=os.getenv("KERNEL", "python"), cloud_compute=L.CloudCompute(os.getenv("COMPUTE", "cpu-small")))
+        self.jupyter_work = JupyterLab(kernel=os.getenv("LIGHTNING_JUPYTER_LAB_KERNEL", "python"), cloud_compute=L.CloudCompute(os.getenv("LIGHTNING_JUPYTER_LAB_COMPUTE", "cpu-small")))
 
     def run(self):
         self.jupyter_work.run()
@@ -37,8 +37,8 @@ By default this component launches with `cpu-small` [Compute Instance](https://l
 
 ```
 lightning run app demo_app.py --cloud
-lightning run app demo_app.py --cloud --env COMPUTE=gpu
-lightning run app demo_app.py --cloud --env COMPUTE=gpu --env KERNEL="python|r|julia"
+lightning run app demo_app.py --cloud --env LIGHTNING_JUPYTER_LAB_COMPUTE=gpu
+lightning run app demo_app.py --cloud --env LIGHTNING_JUPYTER_LAB_COMPUTE=gpu --env LIGHTNING_JUPYTER_LAB_KERNEL="python|r|julia"
 ```
 
 
