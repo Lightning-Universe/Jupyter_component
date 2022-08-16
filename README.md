@@ -1,35 +1,67 @@
-# lit_jupyter component
+<div align="center">
+<img src="https://jupyter.org/assets/homepage/main-logo.svg" width="200px">
 
-This ⚡ [Lightning component](lightning.ai) ⚡ was generated automatically with:
+A Lightning component to Launch Jupyter Lab
+______________________________________________________________________
 
-```bash
-lightning init component lit_jupyter
-```
+![Tests](https://github.com/Lightning-AI/LAI-Jupyter-Component/actions/workflows/ci-testing.yml/badge.svg)
+</div>
 
-## To run lit_jupyter
+# Jupyter Lab
+JupyterLab is the latest web-based interactive development environment for notebooks, code, and data. Its flexible interface allows users to configure and arrange workflows in data science, scientific computing, computational journalism, and machine learning. This component allows you to create `LightningWork` with Jupyter Lab. This components support the following jupyter kernels (`Python 3.8`, `R 3,6` and `Julia 1.7`).
 
-```bash
-lightning install component lightning/lit-jupyter
-```
-
-Once the app is installed, use it in an app:
+# Usage
+To use this component add modify the following variables below. Please consider checking out our documentation to understand they types of [Cloud Compute](https://lightning.ai/lightning-docs/core_api/lightning_work/compute.html) instances supported. Startup time for this component with all kernels is around `5-6` minutes.
 
 ```python
-from lit_jupyter import LitJupyter
+from lit_jupyter import JupyterLab
 import lightning as L
+import os
 
-
-class LitApp(L.LightningFlow):
+class RootFlow(L.LightningFlow):
     def __init__(self) -> None:
         super().__init__()
-        self.lit_jupyter = LitJupyter()
+        self.jupyter_work = JupyterLab(kernel=os.getenv("LIGHTNING_JUPYTER_LAB_KERNEL", "python"), cloud_compute=L.CloudCompute(os.getenv("LIGHTNING_JUPYTER_LAB_COMPUTE", "cpu-small")))
 
     def run(self):
-        self.lit_jupyter.run()
+        self.jupyter_work.run()
     
     def configure_layout(self):
-        return {'name': 'notebook', 'content': self.lit_jupyter}
+        return {'name': "JupyterLab", 'content': self.jupyter_work}
 
-app = L.LightningApp(LitApp())
+app = L.LightningApp(RootFlow())
+```
 
+By default this component launches with `cpu-small` [Compute Instance](https://lightning.ai/lightning-docs/core_api/lightning_work/compute.html) and `python` Kernel. This can be overridden using the COMPUTE environment variable.
+
+
+```
+lightning run app demo_app.py --cloud
+lightning run app demo_app.py --cloud --env LIGHTNING_JUPYTER_LAB_COMPUTE=gpu
+lightning run app demo_app.py --cloud --env LIGHTNING_JUPYTER_LAB_COMPUTE=gpu --env LIGHTNING_JUPYTER_LAB_KERNEL="python|r|julia"
+```
+
+
+# Installation
+Use these instructions to install:
+
+```
+lightning install component lightning/LAI-Jupyter-Component
+```
+
+Or to build locally
+```bash
+git clone https://github.com/Lightning-AI/LAI-Jupyter-Component
+
+cd LAI-Jupyter-Component
+pip install -r requirements.txt
+pip install -e .
+```
+
+# Tests
+To run the test locally:
+```
+# From the root of this package
+pip install -r tests/requirements.txt
+pytest
 ```
