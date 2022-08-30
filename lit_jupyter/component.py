@@ -42,8 +42,8 @@ class JupyterLab(L.LightningWork):
 
     def run(self):
         # Generate new configuration
-        os.system(f"{sys.executable} -m notebook --generate-config")
-        
+        os.system(f"{sys.executable} -m notebook --generate-config -y")
+
         # Jupyter Lab Configuration
         iframe_tornado_settings = """{\"headers\":{\"Content-Security-Policy\":\"frame-ancestors * 'self' "}}"""
         jupyter_config = f"--NotebookApp.token='' --NotebookApp.password='' --NotebookApp.tornado_settings='{iframe_tornado_settings}'"
@@ -57,7 +57,7 @@ class JupyterLab(L.LightningWork):
                 stdout=f,
                 stderr=f,
             )
-        
+
         # wait 5 seconds until server starts, Open log file
         sleep(5)
 
