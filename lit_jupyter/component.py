@@ -7,7 +7,7 @@ import shlex
 from time import sleep
 
 R_INSTALL = """
-sudo apt-get update 
+sudo apt-get update
 sudo apt-get install r-base
 sudo R -e "install.packages('IRkernel')"
 Rscript -e 'IRkernel::installspec()'
