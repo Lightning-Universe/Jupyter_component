@@ -5,6 +5,7 @@ from typing import Optional
 import subprocess
 import shlex
 from time import sleep
+from lightning.app.storage import Pa
 
 R_INSTALL = """
 sudo apt-get update 
@@ -39,6 +40,8 @@ class JupyterLab(L.LightningWork):
     def __init__(self, kernel:str = None, cloud_compute: Optional[L.CloudCompute] = None, parallel=True):
         super().__init__(cloud_compute=cloud_compute, cloud_build_config=CustomBuildConfig(kernel), parallel=parallel)
         self.jupyter_url = None
+        self.path = None
+        self._process = None
 
     def run(self):
         # Generate new configuration
@@ -50,7 +53,7 @@ class JupyterLab(L.LightningWork):
 
         # Start Jupyter Lab
         with open(f"jupyter_lab_{self.port}", "w") as f:
-            subprocess.Popen(
+            self._process = subprocess.Popen(
                 shlex.split(f"{sys.executable} -m jupyter lab --ip {self.host} --port {self.port} --no-browser {jupyter_config}"),
                 bufsize=0,
                 close_fds=True,
