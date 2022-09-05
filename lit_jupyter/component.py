@@ -5,7 +5,6 @@ from typing import Optional
 import subprocess
 import shlex
 from time import sleep
-from lightning.app.storage import Pa
 
 R_INSTALL = """
 sudo apt-get update 
