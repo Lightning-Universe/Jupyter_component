@@ -32,7 +32,7 @@ class RootFlow(L.LightningFlow):
 app = L.LightningApp(RootFlow())
 ```
 
-By default this component launches with `cpu-small` [Compute Instance](https://lightning.ai/lightning-docs/core_api/lightning_work/compute.html) and `python` Kernel. This can be overridden using the LIGHTNING_JUPYTER_LAB_COMPUTE environment variable.
+By default this component launches with `cpu-small` [Compute Instance](https://lightning.ai/lightning-docs/core_api/lightning_work/compute.html) and `python` Kernel. This can be overridden using the `LIGHTNING_JUPYTER_LAB_COMPUTE` and `LIGHTNING_JUPYTER_LAB_KERNEL` environment variable.
 
 
 ```
