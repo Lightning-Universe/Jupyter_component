@@ -2,7 +2,7 @@
 
 import os
 import lightning as L
-from lit_jupyter import JupyterLab
+from lai_jupyter import JupyterLab
 
 class JupyterLabManager(L.LightningFlow):
     def __init__(self) -> None:

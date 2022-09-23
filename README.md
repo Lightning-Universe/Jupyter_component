@@ -14,20 +14,24 @@ JupyterLab is the latest web-based interactive development environment for noteb
 To use this component add modify the following variables below. Please consider checking out our documentation to understand they types of [Cloud Compute](https://lightning.ai/lightning-docs/core_api/lightning_work/compute.html) instances supported. Startup time for this component with all kernels is around `5-6` minutes.
 
 ```python
-from lit_jupyter import JupyterLab
+from lai_jupyter import JupyterLab
 import lightning as L
 import os
+
 
 class RootFlow(L.LightningFlow):
     def __init__(self) -> None:
         super().__init__()
-        self.jupyter_work = JupyterLab(kernel=os.getenv("LIGHTNING_JUPYTER_LAB_KERNEL", "python"), cloud_compute=L.CloudCompute(os.getenv("LIGHTNING_JUPYTER_LAB_COMPUTE", "cpu-small")))
+        self.jupyter_work = JupyterLab(kernel=os.getenv("LIGHTNING_JUPYTER_LAB_KERNEL", "python"),
+                                       cloud_compute=L.CloudCompute(
+                                           os.getenv("LIGHTNING_JUPYTER_LAB_COMPUTE", "cpu-small")))
 
     def run(self):
         self.jupyter_work.run()
-    
+
     def configure_layout(self):
         return {'name': "JupyterLab", 'content': self.jupyter_work}
+
 
 app = L.LightningApp(RootFlow())
 ```

@@ -3,7 +3,7 @@ import os
 import requests
 import lightning as L
 from lightning.app.runners import MultiProcessRuntime
-from lit_jupyter import JupyterLab
+from lai_jupyter import JupyterLab
 
 
 class TestJupyterServer(L.LightningFlow):
