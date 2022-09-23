@@ -78,5 +78,5 @@ class JupyterLab(L.LightningWork):
         with open(f"jupyter_lab_{self.port}") as fp:
             lines = fp.readlines()
         for line in lines:
-            if f"{self.port}/lab" in line:  # type: ignore
-                self.jupyter_url = line.split(" ")[-1].strip()
+            if f"{self.port}/lab" in line:
+                self.jupyter_url = line.split(" ")[-1].strip()  # type: ignore
