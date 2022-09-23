@@ -20,7 +20,7 @@ with open("tests/requirements.txt") as _file:
     test_reqs = [req for req in _file.readlines()]
 
 setup(
-    name="lightning-notebook",
+    name="lightning-jupyter",
     version="0.0.2",
     description="JupyterLab component for Lightning Applications",
     long_description=long_description,
