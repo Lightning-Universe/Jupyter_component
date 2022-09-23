@@ -1,19 +1,18 @@
 import os
 
-import lightning as L
 import requests
+import lightning as L
 from lightning.app.runners import MultiProcessRuntime
-
-from lit_jupyter import JupyterLab
+from lai_jupyter import JupyterLab
 
 
 class TestJupyterServer(L.LightningFlow):
     def __init__(self):
         super().__init__()
-        self.success = False
+        self.success = False 
 
     def run(self, jupyter_url: str):
-        response = requests.get(jupyter_url)
+        response = requests.get(jupyter_url)    
         if response.status_code == 200:
             self.success = True
 
@@ -21,16 +20,14 @@ class TestJupyterServer(L.LightningFlow):
 class RootFlow(L.LightningFlow):
     def __init__(self):
         super().__init__()
-        self.jupyter_work = JupyterLab(
-            kernel="python", cloud_compute=L.CloudCompute(os.getenv("LIGHTNING_JUPYTER_LAB_COMPUTE", "cpu-small"))
-        )
+        self.jupyter_work = JupyterLab(kernel="python", cloud_compute=L.CloudCompute(os.getenv("LIGHTNING_JUPYTER_LAB_COMPUTE", "cpu-small")))
         self.test_jupyter_flow = TestJupyterServer()
 
     def run(self):
         self.jupyter_work.run()
         if self.jupyter_work.jupyter_url:
             self.test_jupyter_flow.run(self.jupyter_work.jupyter_url)
-
+        
         if self.test_jupyter_flow.success:
             print("Test successful, Exiting")
             self._exit()
