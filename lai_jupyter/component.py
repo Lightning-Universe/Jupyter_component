@@ -7,7 +7,7 @@ from typing import Optional
 
 import lightning as L
 
-R_INSTALL = """
+R_INSTALL: list = """
 sudo apt-get update
 sudo apt-get install r-base
 sudo R -e "install.packages('IRkernel')"
@@ -16,7 +16,7 @@ Rscript -e 'IRkernel::installspec()'
     "\n"
 )
 
-JULIA_INSTALL = """
+JULIA_INSTALL: list = """
 sudo apt-get update
 wget https://julialang-s3.julialang.org/bin/linux/x64/1.7/julia-1.7.3-linux-x86_64.tar.gz
 tar -xvzf julia-1.7.3-linux-x86_64.tar.gz; julia-1.7.3/bin/julia -e 'using Pkg; Pkg.add("IJulia")'
@@ -27,10 +27,10 @@ rm -rf julia-1.7.3-linux-x86_64.tar.gz
 
 
 class CustomBuildConfig(L.BuildConfig):
-    def __init__(self, kernel=str):
+    def __init__(self, kernel: str) -> None:
         self.kernel = kernel
 
-    def build_commands(self):
+    def build_commands(self) -> list:
         build_dict = {"python": [], "r": R_INSTALL, "julia": JULIA_INSTALL}
         build_args = []
 
@@ -41,13 +41,15 @@ class CustomBuildConfig(L.BuildConfig):
 
 
 class JupyterLab(L.LightningWork):
-    def __init__(self, kernel: str = None, cloud_compute: Optional[L.CloudCompute] = None, parallel=True):
+    def __init__(
+        self, kernel: Optional[str] = None, cloud_compute: Optional[L.CloudCompute] = None, parallel: bool = True
+    ) -> None:
         super().__init__(cloud_compute=cloud_compute, cloud_build_config=CustomBuildConfig(kernel), parallel=parallel)
         self.jupyter_url = None
         self.path = None
         self._process = None
 
-    def run(self):
+    def run(self) -> None:
         # Generate new configuration
         os.system(f"{sys.executable} -m notebook --generate-config -y")
 
