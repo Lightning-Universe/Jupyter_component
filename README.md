@@ -49,6 +49,12 @@ Use these instructions to install:
 lightning install component lightning/LAI-Jupyter-Component
 ```
 
+Or use it with pip
+```
+> cat requirements.txt
+git+https://github.com/Lightning-AI/LAI-Jupyter-Component
+```
+
 Or to build locally
 ```bash
 git clone https://github.com/Lightning-AI/LAI-Jupyter-Component
