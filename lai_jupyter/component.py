@@ -41,9 +41,7 @@ class CustomBuildConfig(L.BuildConfig):
 
 
 class JupyterLab(L.LightningWork):
-    def __init__(
-        self, kernel: Optional[str] = None, cloud_compute: Optional[L.CloudCompute] = None, parallel: bool = True
-    ) -> None:
+    def __init__(self, kernel: str, cloud_compute: Optional[L.CloudCompute] = None, parallel: bool = True) -> None:
         super().__init__(cloud_compute=cloud_compute, cloud_build_config=CustomBuildConfig(kernel), parallel=parallel)
         self.jupyter_url = None
         self.path = None
@@ -62,23 +60,23 @@ class JupyterLab(L.LightningWork):
         )
 
         # Start Jupyter Lab
-        with open(f"jupyter_lab_{self.port}", "w") as f:
-            self._process = subprocess.Popen(
+        with open(f"jupyter_lab_{self.port}", "w") as fp:
+            self._process = subprocess.Popen(  # type: ignore
                 shlex.split(
                     f"{sys.executable} -m jupyter lab --ip {self.host} --port {self.port} --no-browser {jupyter_config}"
                 ),
                 bufsize=0,
                 close_fds=True,
-                stdout=f,
-                stderr=f,
+                stdout=fp,
+                stderr=fp,
             )
 
         # wait 5 seconds until server starts, Open log file
         sleep(5)
 
         # Extract token
-        with open(f"jupyter_lab_{self.port}") as f:
-            lines = f.readlines()
-            for line in lines:
-                if f"{self.port}/lab" in line:
-                    self.jupyter_url = line.split(" ")[-1].strip()
+        with open(f"jupyter_lab_{self.port}") as fp:
+            lines = fp.readlines()
+        for line in lines:
+            if f"{self.port}/lab" in line:  # type: ignore
+                self.jupyter_url = line.split(" ")[-1].strip()
