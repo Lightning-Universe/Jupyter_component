@@ -56,7 +56,7 @@ lightning run app demo_app.py --cloud --env LIGHTNING_JUPYTER_LAB_COMPUTE=gpu --
 Use these instructions to install:
 
 ```
-lightning install component git+https://github.com/Lightning-AI/LAI-Jupyter-Component.git@main
+lightning install component lightning/lit-jupyter
 ```
 
 Or use it with pip
