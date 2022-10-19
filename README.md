@@ -62,8 +62,7 @@ lightning install component lightning/lit-jupyter
 Or use it with pip
 
 ```
-> cat requirements.txt
-git+https://github.com/Lightning-AI/LAI-Jupyter-Component
+pip install lightning-jupyter
 ```
 
 Or to build locally
