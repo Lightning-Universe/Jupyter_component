@@ -32,8 +32,7 @@ class CustomBuildConfig(L.BuildConfig):
     kernel: str = "python"
 
     def build_commands(self) -> list:
-        build_dict = {"python": [], "r": [R_INSTALL], "julia": [JULIA_INSTALL]}
-        return ["pip3 install jupyterlab notebook"] + build_dict[self.kernel]
+        return {"python": [], "r": [R_INSTALL], "julia": [JULIA_INSTALL]}[self.kernel]
 
 
 class JupyterLab(L.LightningWork):

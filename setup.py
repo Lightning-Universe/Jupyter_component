@@ -20,7 +20,7 @@ with open("tests/requirements.txt") as _file:
 
 setup(
     name="lightning-jupyter",
-    version="0.0.2",
+    version="0.0.3",
     description="JupyterLab component for Lightning Applications",
     long_description=long_description,
     long_description_content_type="text/markdown",
