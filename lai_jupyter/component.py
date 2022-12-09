@@ -32,12 +32,13 @@ class CustomBuildConfig(L.BuildConfig):
     kernel: str = "python"
 
     def build_commands(self) -> list:
-        return {"python": [], "r": [R_INSTALL], "julia": [JULIA_INSTALL]}[self.kernel]
+        commands = {"python": [], "r": R_INSTALL, "julia": JULIA_INSTALL}[self.kernel]
+        return commands
 
 
 class JupyterLab(L.LightningWork):
     def __init__(self, kernel: Literal["python", "r", "julia"] = "python", cloud_compute: Optional[L.CloudCompute] = None, parallel: bool = True) -> None:
-        super().__init__(cloud_compute=cloud_compute, cloud_build_config=CustomBuildConfig(kernel), parallel=parallel)
+        super().__init__(cloud_compute=cloud_compute, cloud_build_config=CustomBuildConfig(kernel=kernel), parallel=parallel)
         self.jupyter_url = None
         self.path = None
         self._process = None
@@ -75,3 +76,6 @@ class JupyterLab(L.LightningWork):
         for line in lines:
             if f"{self.port}/lab" in line:
                 self.jupyter_url = line.split(" ")[-1].strip()  # type: ignore
+
+    def configure_layout(self):
+        return self.url
