@@ -4,7 +4,7 @@ import subprocess
 import sys
 from time import sleep
 from typing import Optional
-
+from dataclasses import dataclass
 import lightning as L
 
 R_INSTALL: list = """
@@ -26,9 +26,10 @@ rm -rf julia-1.7.3-linux-x86_64.tar.gz
 )
 
 
+@dataclass
 class CustomBuildConfig(L.BuildConfig):
-    def __init__(self, kernel: str) -> None:
-        self.kernel = kernel
+    
+    kernel: str
 
     def build_commands(self) -> list:
         build_dict = {"python": [], "r": R_INSTALL, "julia": JULIA_INSTALL}
