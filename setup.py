@@ -20,7 +20,7 @@ with open("tests/requirements.txt") as _file:
 
 setup(
     name="lightning-jupyter",
-    version="0.0.3",
+    version="0.0.4",
     description="JupyterLab component for Lightning Applications",
     long_description=long_description,
     long_description_content_type="text/markdown",
@@ -33,5 +33,5 @@ setup(
     extras_require={
         "test": test_reqs,
     },
-    python_requires=">=3.7",
+    python_requires=">=3.8",
 )
