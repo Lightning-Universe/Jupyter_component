@@ -2,9 +2,10 @@ import os
 import shlex
 import subprocess
 import sys
-from time import sleep
-from typing import Optional, Literal
 from dataclasses import dataclass
+from time import sleep
+from typing import Literal, Optional
+
 import lightning as L
 
 R_INSTALL: list = """
@@ -28,7 +29,7 @@ rm -rf julia-1.7.3-linux-x86_64.tar.gz
 
 @dataclass
 class CustomBuildConfig(L.BuildConfig):
-    
+
     kernel: str = "python"
 
     def build_commands(self) -> list:
@@ -37,8 +38,15 @@ class CustomBuildConfig(L.BuildConfig):
 
 
 class JupyterLab(L.LightningWork):
-    def __init__(self, kernel: Literal["python", "r", "julia"] = "python", cloud_compute: Optional[L.CloudCompute] = None, parallel: bool = True) -> None:
-        super().__init__(cloud_compute=cloud_compute, cloud_build_config=CustomBuildConfig(kernel=kernel), parallel=parallel)
+    def __init__(
+        self,
+        kernel: Literal["python", "r", "julia"] = "python",
+        cloud_compute: Optional[L.CloudCompute] = None,
+        parallel: bool = True,
+    ) -> None:
+        super().__init__(
+            cloud_compute=cloud_compute, cloud_build_config=CustomBuildConfig(kernel=kernel), parallel=parallel
+        )
         self.jupyter_url = None
         self.path = None
         self._process = None

@@ -21,11 +21,7 @@ To use this component add modify the following variables below. Please consider 
 import lightning as L
 from lai_jupyter import JupyterLab
 
-app = L.LightningApp(
-    JupyterLab(
-        cloud_compute=L.CloudCompute("cpu-small")
-    )
-)
+app = L.LightningApp(JupyterLab(cloud_compute=L.CloudCompute("cpu-small")))
 ```
 
 By default this component launches with `cpu-small` [Compute Instance](https://lightning.ai/lightning-docs/core_api/lightning_work/compute.html) and `python` Kernel. This can be overridden using the `LIGHTNING_JUPYTER_LAB_COMPUTE` and `LIGHTNING_JUPYTER_LAB_KERNEL` environment variable.
