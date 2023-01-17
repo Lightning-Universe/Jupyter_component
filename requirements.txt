@@ -1,3 +1,4 @@
+typing-extensions>=4.0.0
 jupyterlab
-lightning
+lightning>1.8.0
 notebook
