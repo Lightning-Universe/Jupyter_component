@@ -85,5 +85,5 @@ class JupyterLab(L.LightningWork):
             if f"{self.port}/lab" in line:
                 self.jupyter_url = line.split(" ")[-1].strip()  # type: ignore
 
-    def configure_layout(self):
+    def configure_layout(self) -> str:
         return self.url
