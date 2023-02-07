@@ -29,7 +29,6 @@ rm -rf julia-1.7.3-linux-x86_64.tar.gz
 
 @dataclass
 class CustomBuildConfig(L.BuildConfig):
-
     kernel: str = "python"
 
     def build_commands(self) -> list:
