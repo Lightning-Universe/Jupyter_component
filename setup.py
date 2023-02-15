@@ -9,7 +9,6 @@ with open("requirements.txt") as _file:
     install_reqs = []
     dependency_links = []
     for req in _file.readlines():
-
         if req.startswith("--extra-index-url"):
             dependency_links.append(req.replace("--extra-index-url ", ""))
         else:
