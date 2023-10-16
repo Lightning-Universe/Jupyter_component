@@ -1,5 +1,5 @@
-import lightning as L
+from lightning.app import CloudCompute, LightningApp
 
 from lai_jupyter import JupyterLab
 
-app = L.LightningApp(JupyterLab(cloud_compute=L.CloudCompute("cpu-small")))
+app = LightningApp(JupyterLab(cloud_compute=CloudCompute("cpu-small")))

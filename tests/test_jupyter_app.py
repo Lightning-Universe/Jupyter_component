@@ -1,13 +1,13 @@
 import os
 
-import lightning as L
 import requests
+from lightning.app import CloudCompute, LightningApp, LightningFlow
 from lightning.app.runners import MultiProcessRuntime
 
 from lai_jupyter import JupyterLab
 
 
-class TestJupyterServer(L.LightningFlow):
+class TestJupyterServer(LightningFlow):
     def __init__(self):
         super().__init__()
         self.success = False
@@ -18,11 +18,11 @@ class TestJupyterServer(L.LightningFlow):
             self.success = True
 
 
-class RootFlow(L.LightningFlow):
+class RootFlow(LightningFlow):
     def __init__(self):
         super().__init__()
         self.jupyter_work = JupyterLab(
-            kernel="python", cloud_compute=L.CloudCompute(os.getenv("LIGHTNING_JUPYTER_LAB_COMPUTE", "cpu-small"))
+            kernel="python", cloud_compute=CloudCompute(os.getenv("LIGHTNING_JUPYTER_LAB_COMPUTE", "cpu-small"))
         )
         self.test_jupyter_flow = TestJupyterServer()
 
@@ -40,5 +40,5 @@ class RootFlow(L.LightningFlow):
 
 
 def test_file_server():
-    app = L.LightningApp(RootFlow())
+    app = LightningApp(RootFlow())
     MultiProcessRuntime(app).dispatch()

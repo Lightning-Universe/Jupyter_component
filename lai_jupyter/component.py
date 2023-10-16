@@ -6,7 +6,7 @@ from dataclasses import dataclass
 from time import sleep
 from typing import Literal, Optional
 
-import lightning as L
+from lightning.app import BuildConfig, CloudCompute, LightningWork
 
 R_INSTALL: list = """
 sudo apt-get update
@@ -28,7 +28,7 @@ rm -rf julia-1.7.3-linux-x86_64.tar.gz
 
 
 @dataclass
-class CustomBuildConfig(L.BuildConfig):
+class CustomBuildConfig(BuildConfig):
     kernel: str = "python"
 
     def build_commands(self) -> list:
@@ -36,11 +36,11 @@ class CustomBuildConfig(L.BuildConfig):
         return commands
 
 
-class JupyterLab(L.LightningWork):
+class JupyterLab(LightningWork):
     def __init__(
         self,
         kernel: Literal["python", "r", "julia"] = "python",
-        cloud_compute: Optional[L.CloudCompute] = None,
+        cloud_compute: Optional[CloudCompute] = None,
         parallel: bool = True,
     ) -> None:
         super().__init__(
